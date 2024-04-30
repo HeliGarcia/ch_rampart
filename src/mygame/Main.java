@@ -114,7 +114,8 @@ public class Main extends SimpleApplication {
                 nodo.setLocalTranslation(i * CELL_SIZE, j * CELL_SIZE, 0);
 
                 Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-                mat.setColor("Color", ColorRGBA.Green);
+                mat.setColor("Color", ColorRGBA.Orange);
+                mat.setTexture("ColorMap", assetManager.loadTexture("Textures/sand.jpg"));
                 cell.setMaterial(mat);
 
                 
