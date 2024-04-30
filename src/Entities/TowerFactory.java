@@ -50,11 +50,12 @@ public class TowerFactory {
     }
     
     
+    
     public Tower redTower(String name, Node towerParentNode){
         return createTower(
                 name, 
-                new Vector3f(1,1,0), 
-                myBox(name,  ColorRGBA.Red), 
+                new Vector3f(1,1,1), 
+                myBox(name,  ColorRGBA.LightGray), 
                 2.5f, 
                 2.4f, 
                 generator, 
@@ -67,6 +68,7 @@ public class TowerFactory {
         Geometry geom = new Geometry(name, new Box(Vector3f.ZERO, 1, 1, 1));
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", color);
+        mat.setTexture("ColorMap", assetManager.loadTexture("Textures/Chinchi.png"));
         geom.setMaterial(mat);
         return geom;
     }

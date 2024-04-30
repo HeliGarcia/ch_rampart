@@ -9,6 +9,9 @@ import Player.PlayerController;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -53,7 +56,8 @@ public class Main extends SimpleApplication {
         Node playerNode = new Node("player");
         Node towerNode = new Node("tower"); 
         Node grid = new Node("grid");
-        grid.setLocalTranslation(-17,-17,-40);
+        rootNode.setLocalTranslation(-17,-17,-30);
+        
         createGrid(17,2f,grid);
         
         rootNode.attachChild(creepNode);
@@ -68,10 +72,15 @@ public class Main extends SimpleApplication {
         PlaceTower ptower = new PlaceTower(grid,this.cam, this.getInputManager(), tfactory);
         controller = new PlayerController(this.getInputManager(),ptower);
         
+        rootNode.setLocalRotation(new Quaternion().fromAngleAxis(-FastMath.PI/4, new Vector3f(1,0,0)));
+        
+        //cam.setLocation(new Vector3f(0,-40, 40));
+        //cam.setRotation(new Quaternion().fromAngleAxis(FastMath.PI/10, new Vector3f(1,0,0)));
     }
 
     @Override
     public void simpleUpdate(float tpf) {
+        
         ArrayList<Bullet> delleted = new ArrayList<Bullet>();
         for (Bullet bullet : bulletCollection){
             if (bullet.poss.y > -20){
@@ -80,7 +89,6 @@ public class Main extends SimpleApplication {
             else {
                 delleted.add(bullet);
             }
-            
         }
         for(Bullet bullet : delleted){
             System.out.println("Deleted bullet: " + bullet.parent.detachChild(bullet.shape));
@@ -106,7 +114,7 @@ public class Main extends SimpleApplication {
                 nodo.setLocalTranslation(i * CELL_SIZE, j * CELL_SIZE, 0);
 
                 Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-                mat.setColor("Color", ColorRGBA.Blue);
+                mat.setColor("Color", ColorRGBA.Green);
                 cell.setMaterial(mat);
 
                 
