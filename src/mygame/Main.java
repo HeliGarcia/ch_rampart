@@ -56,9 +56,9 @@ public class Main extends SimpleApplication {
         Node playerNode = new Node("player");
         Node towerNode = new Node("tower"); 
         Node grid = new Node("grid");
-        rootNode.setLocalTranslation(-17,-17,-30);
+        rootNode.setLocalTranslation(-12,-12,-25);
         
-        createGrid(17,2f,grid);
+        createGrid(12,2f,grid);
         
         rootNode.attachChild(creepNode);
         rootNode.attachChild(playerNode);
