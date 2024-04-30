@@ -72,10 +72,21 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
+        ArrayList<Bullet> delleted = new ArrayList<Bullet>();
         for (Bullet bullet : bulletCollection){
-            //if (bullet.)
-            bullet.update(tpf);
+            if (bullet.poss.y > -20){
+                bullet.update(tpf);
+            }
+            else {
+                delleted.add(bullet);
+            }
+            
         }
+        for(Bullet bullet : delleted){
+            System.out.println("Deleted bullet: " + bullet.parent.detachChild(bullet.shape));
+            bulletCollection.remove(bullet);
+        }
+        delleted.clear();
         for (Tower tower : towerCollection){
             tower.update(tpf);
         }

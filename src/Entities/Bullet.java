@@ -14,10 +14,10 @@ import com.jme3.scene.Node;
  */
 public class Bullet {
     String name;
-    Node parent;
-    Vector3f poss;
+    public Node parent;
+    public Vector3f poss;
     Vector3f acceleration;
-    Geometry shape;
+    public Geometry shape;
 
     public Bullet(String name, Node parent, Vector3f poss, Vector3f acceleration, Geometry shape) {
         this.name = name;
