@@ -6,11 +6,16 @@ package Entities;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Quad;
+import com.jme3.scene.shape.Sphere;
 import java.util.ArrayList;
 
 /**
@@ -54,7 +59,8 @@ public class TowerFactory {
     public Tower redTower(String name, Node towerParentNode){
         return createTower(
                 name, 
-                new Vector3f(1,1,1), 
+                //new Vector3f(1,1,1), 
+                new Vector3f(0,1,0),
                 myBox(name,  ColorRGBA.LightGray), 
                 2.5f, 
                 2.4f, 
@@ -65,11 +71,20 @@ public class TowerFactory {
     }
         
     private Geometry myBox(String name,  ColorRGBA color){
-        Geometry geom = new Geometry(name, new Box(Vector3f.ZERO, 1, 1, 1));
+        Geometry geom = new Geometry(name, 
+                //new Box(Vector3f.ZERO, 1, 1, 1)
+                //new Sphere(3,4,1)
+                new Quad(2,2)
+        );
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", color);
+        mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+        //mat.getAdditionalRenderState().setAlphaTest(true);
+        //mat.getAdditionalRenderState().setAlphaFallOff(0.5f);
         mat.setTexture("ColorMap", assetManager.loadTexture("Textures/Chinchi.png"));
         geom.setMaterial(mat);
+        geom.setLocalRotation(new Quaternion().fromAngleAxis(FastMath.PI/3, new Vector3f(1,0,0)));
+
         return geom;
     }
 }
