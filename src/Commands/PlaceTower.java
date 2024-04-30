@@ -5,6 +5,7 @@
 package Commands;
 
 //import static Entities.Tower.mesh;
+import Entities.TowerFactory;
 import com.jme3.asset.AssetManager;
 import com.jme3.collision.CollisionResults;
 import com.jme3.input.InputManager;
@@ -24,20 +25,16 @@ import com.jme3.scene.shape.Box;
  */
 public class PlaceTower implements Command{
     private Node grid;
-    private Node towers;
+    //private Node towers;
     private Camera cam;
     InputManager inputManager;
-    public Box mesh = new Box(Vector3f.ZERO, 1, 1, 1);
-    private AssetManager assetManager;
-    //private float i=0;
-    
-    
-    public PlaceTower(Node grid, Node towers, Camera cam, InputManager inputManager, AssetManager assetManager) {
+    TowerFactory generator;
+
+    public PlaceTower(Node grid, Camera cam, InputManager inputManager, TowerFactory generator) {
         this.grid = grid;
         this.cam = cam;
         this.inputManager = inputManager;
-        this.assetManager = assetManager;
-        this.towers = towers;
+        this.generator = generator;
     }
     
     public void execute(){
@@ -56,20 +53,12 @@ public class PlaceTower implements Command{
             if (nodo.getChild("tower") != null ) {
                 return;
             } else {
-                nodo.attachChild(myBox("tower",  ColorRGBA.Red));
+                generator.redTower("tower", nodo);
+                //nodo.attachChild(myBox("tower",  ColorRGBA.Red));
             } 
         }
     
     
-    }
-    
-    private Geometry myBox(String name,  ColorRGBA color){
-        Geometry geom = new Geometry(name, mesh);
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", color);
-        geom.setMaterial(mat);
-        geom.setLocalTranslation(1,1,0);
-        return geom;
     }
     
 }

@@ -1,6 +1,10 @@
 package mygame;
 
 import Commands.PlaceTower;
+import Entities.Bullet;
+import Entities.BulletFactory;
+import Entities.Tower;
+import Entities.TowerFactory;
 import Player.PlayerController;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
@@ -11,6 +15,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
 import com.jme3.system.AppSettings;
+import java.util.ArrayList;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -20,6 +25,8 @@ import com.jme3.system.AppSettings;
 public class Main extends SimpleApplication {
     
     PlayerController controller;
+    ArrayList<Tower> towerCollection;
+    ArrayList<Bullet> collection;
     
     public static void main(String[] args) {
         Main app = new Main();
@@ -55,7 +62,9 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(grid);
         //grid.attachChild(geom);
         
-        PlaceTower ptower = new PlaceTower(grid, playerNode,this.cam, this.getInputManager(), this.getAssetManager());
+        BulletFactory bfactory = new BulletFactory(playerNode, this.assetManager);
+        TowerFactory tfactory = new TowerFactory(bfactory,this.assetManager);
+        PlaceTower ptower = new PlaceTower(grid,this.cam, this.getInputManager(), tfactory);
         controller = new PlayerController(this.getInputManager(),ptower);
         
     }
