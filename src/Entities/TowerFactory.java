@@ -11,6 +11,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,25 +20,33 @@ import com.jme3.scene.shape.Box;
 public class TowerFactory {
     private BulletFactory generator;
     private AssetManager assetManager;
+    private ArrayList<Tower> collection;
 
-    public TowerFactory(BulletFactory generator, AssetManager assetManager) {
+    public TowerFactory(BulletFactory generator, AssetManager assetManager, ArrayList collection) {
         this.generator = generator;
         this.assetManager = assetManager;
+        this.collection = collection;
     }
+    
     
     
 
     public Tower createTower(String name, Vector3f loc, Geometry geom, float cooldown, float charge, BulletFactory generator, Node towerParentNode) {
-        Tower tower = new Tower(towerParentNode, name, loc, geom, cooldown, charge, generator);
+        Tower tower = new Tower(towerParentNode, 
+                name, 
+                loc, 
+                geom, 
+                cooldown, 
+                charge, 
+                generator);
         attachTower(tower, towerParentNode); // Attach tower to the parent node
         return tower;
     }
 
     private void attachTower(Tower tower, Node towerParentNode) {
-        towerParentNode.attachChild(tower.geom); // Attach tower geometry to the parent node
-        tower.geom.setLocalTranslation(tower.loc); // Set tower's position
-        // You may want to add more setup logic here, like attaching physics control
-        // Example: tower.geom.addControl(new RigidBodyControl(0));
+        collection.add(tower);
+        towerParentNode.attachChild(tower.geom); 
+        tower.geom.setLocalTranslation(tower.loc); 
     }
     
     
@@ -45,9 +54,9 @@ public class TowerFactory {
         return createTower(
                 name, 
                 new Vector3f(1,1,0), 
-                myBox("tower",  ColorRGBA.Red), 
-                1f, 
-                1f, 
+                myBox(name,  ColorRGBA.Red), 
+                2.5f, 
+                2.4f, 
                 generator, 
                 towerParentNode
         );

@@ -46,7 +46,9 @@ public class Tower {
     }
     
     public void shoot(){
-        generator.createBullet(geom.getWorldTranslation());
+        Vector3f vector = geom.getWorldTranslation();
+        generator.createBullet(new Vector3f(vector.x ,vector.y, vector.z));
+        //System.out.println("shoot");
     }
     
 

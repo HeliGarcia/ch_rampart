@@ -26,7 +26,7 @@ public class Main extends SimpleApplication {
     
     PlayerController controller;
     ArrayList<Tower> towerCollection;
-    ArrayList<Bullet> collection;
+    ArrayList<Bullet> bulletCollection;
     
     public static void main(String[] args) {
         Main app = new Main();
@@ -61,9 +61,10 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(towerNode);
         rootNode.attachChild(grid);
         //grid.attachChild(geom);
-        
-        BulletFactory bfactory = new BulletFactory(playerNode, this.assetManager);
-        TowerFactory tfactory = new TowerFactory(bfactory,this.assetManager);
+        bulletCollection = new ArrayList<Bullet>();
+        towerCollection = new ArrayList<Tower>();
+        BulletFactory bfactory = new BulletFactory(playerNode, this.assetManager, bulletCollection);
+        TowerFactory tfactory = new TowerFactory(bfactory,this.assetManager, towerCollection);
         PlaceTower ptower = new PlaceTower(grid,this.cam, this.getInputManager(), tfactory);
         controller = new PlayerController(this.getInputManager(),ptower);
         
@@ -71,7 +72,13 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        //TODO: add update code
+        for (Bullet bullet : bulletCollection){
+            //if (bullet.)
+            bullet.update(tpf);
+        }
+        for (Tower tower : towerCollection){
+            tower.update(tpf);
+        }
     }
 
     @Override

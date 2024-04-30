@@ -11,6 +11,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,10 +20,12 @@ import com.jme3.scene.shape.Box;
 public class BulletFactory {
     private Node bulletParentNode;
     private AssetManager assetManager;
+    private ArrayList<Bullet> collection;
 
-    public BulletFactory(Node bulletParentNode, AssetManager assetManager) {
+    public BulletFactory(Node bulletParentNode, AssetManager assetManager, ArrayList collection) {
         this.bulletParentNode = bulletParentNode;
         this.assetManager = assetManager;
+        this.collection = collection;
     }
 
     
@@ -34,16 +37,17 @@ public class BulletFactory {
     }
 
     private void attachBullet(Bullet bullet) {
+        collection.add(bullet);
         bulletParentNode.attachChild(bullet.shape); 
         bullet.shape.setLocalTranslation(bullet.poss); 
     }
     
     public Bullet createBullet(Vector3f cordinates){
-        return createBullet("", cordinates, new Vector3f(1,1,0), myBox("tower",  ColorRGBA.White));
+        return createBullet("", cordinates, new Vector3f(0,-5f,0), myBox(collection.size() + "",  ColorRGBA.White));
     
     }
     private Geometry myBox(String name,  ColorRGBA color){
-        Geometry geom = new Geometry(name, new Box(Vector3f.ZERO, 1, 1, 1));
+        Geometry geom = new Geometry(name, new Box(Vector3f.ZERO, .3f,.3f,.3f));
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", color);
         geom.setMaterial(mat);
